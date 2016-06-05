@@ -1,0 +1,167 @@
+#include<iostream>
+#include<graphics.h>
+#include<math.h>
+#include<ctime>
+using namespace std;
+
+#define PI 3.14159265
+#define ESC        27
+#define MaxX     1360
+#define MaxY      768
+#define MaxBolas    4
+
+struct TBolas {
+  int x0, y0;
+  int r;
+  float ang;
+  int passo;
+  int d;
+  int x, y;
+  int move;
+};
+
+TBolas Bolas[MaxBolas];
+
+void DesenhaFundo();
+void IniciaDados();
+void MoveBolas();
+void DesenhaBolas();
+
+void *R;
+int main()  { 
+  int pg, i, Ok;
+  char tecla = 0;
+  double d1, d2, d3, d4, d5, d6;
+  
+  srand(time(NULL));
+  initwindow(MaxX, MaxY);	
+  IniciaDados();
+  settextstyle(4, 0, 5);
+  
+  while(tecla != ESC) {
+    if (pg == 1) pg = 2; else pg=1;
+    setactivepage(pg);
+    cleardevice();
+    DesenhaFundo();
+    MoveBolas();
+    DesenhaBolas();
+    setcolor(0);
+    setvisualpage(pg);
+    
+    d1 = sqrt(pow(Bolas[0].x - Bolas[1].x, 2) + pow(Bolas[0].y - Bolas[1].y, 2));
+    d2 = sqrt(pow(Bolas[0].x - Bolas[2].x, 2) + pow(Bolas[0].y - Bolas[2].y, 2));
+    d3 = sqrt(pow(Bolas[0].x - Bolas[3].x, 2) + pow(Bolas[0].y - Bolas[3].y, 2));
+    d4 = sqrt(pow(Bolas[1].x - Bolas[2].x, 2) + pow(Bolas[1].y - Bolas[2].y, 2));
+    d5 = sqrt(pow(Bolas[1].x - Bolas[3].x, 2) + pow(Bolas[1].y - Bolas[3].y, 2));
+    d6 = sqrt(pow(Bolas[2].x - Bolas[3].x, 2) + pow(Bolas[2].y - Bolas[3].y, 2));
+    if (d1 <= Bolas[0].r + Bolas[1].r){
+      Bolas[0].passo = -Bolas[0].passo;
+      Bolas[1].passo = -Bolas[1].passo;
+    }else if (d2 <= Bolas[0].r + Bolas[2].r){
+      Bolas[0].passo = -Bolas[0].passo;
+      Bolas[2].passo = -Bolas[2].passo;
+  	}else if (d3 <= Bolas[0].r + Bolas[3].r){
+      Bolas[0].passo = -Bolas[0].passo;
+      Bolas[3].passo = -Bolas[3].passo;
+    }else if (d4 <= Bolas[1].r + Bolas[2].r){
+      Bolas[1].passo = -Bolas[1].passo;
+      Bolas[2].passo = -Bolas[2].passo;
+  	}else if (d5 <= Bolas[1].r + Bolas[3].r){
+      Bolas[1].passo = -Bolas[1].passo;
+      Bolas[3].passo = -Bolas[3].passo;;
+  	}else if (d6 <= Bolas[2].r + Bolas[3].r){
+      Bolas[2].passo = -Bolas[2].passo;
+      Bolas[3].passo = -Bolas[3].passo;;
+	}
+
+    delay(20);
+    if (kbhit()) {
+      tecla = getch();
+      if (tecla == ' ') {
+        Bolas[0].move = !Bolas[0].move;
+        Bolas[1].move = !Bolas[1].move;
+        Bolas[2].move = !Bolas[2].move;
+        Bolas[3].move = !Bolas[3].move;
+      }
+    }
+  }
+  
+  closegraph();	
+  return 0; 
+}
+
+
+void DesenhaFundo() {
+	int tam = imagesize(0, 0, 10, 10);
+	R = malloc(tam);
+	readimagefile("game.bmp", 0, 0, 1360, 768);
+	getimage(0, 0, 1360, 768, R);
+	putimage(0, 0, R, OR_PUT);
+	
+}
+
+void IniciaDados() {
+  Bolas[0].x0    =  680;
+  Bolas[0].y0    =  90;
+  Bolas[0].x     = Bolas[0].x0;
+  Bolas[0].y     = Bolas[0].y0;
+  Bolas[0].r     =  35;
+  Bolas[0].passo =  10;
+  Bolas[0].d     =   0;
+  Bolas[0].ang   =   90;
+  Bolas[0].move  =   0;
+  
+  Bolas[1].x0    = 90;
+  Bolas[1].y0    = 325;
+  Bolas[1].x     = Bolas[1].x0;
+  Bolas[1].y     = Bolas[1].y0;
+  Bolas[1].r     =  35;
+  Bolas[1].passo =  10;
+  Bolas[1].d     =   0;
+  Bolas[1].ang   =  0;
+  Bolas[1].move  =   0;
+  
+  Bolas[2].x0    = 1310;
+  Bolas[2].y0    = 90;
+  Bolas[2].x     = Bolas[2].x0;
+  Bolas[2].y     = Bolas[2].y0;
+  Bolas[2].r     =  35;
+  Bolas[2].passo =  10;
+  Bolas[2].d     =   0;
+  Bolas[2].ang   = 211;
+  Bolas[2].move  =   0;
+  
+  Bolas[3].x0    = 50;
+  Bolas[3].y0    = 130;
+  Bolas[3].x     = Bolas[3].x0;
+  Bolas[3].y     = Bolas[3].y0;
+  Bolas[3].r     =  35;
+  Bolas[3].passo =  10;
+  Bolas[3].d     =   0;
+  Bolas[3].ang   = 148;
+  Bolas[3].move  =   0;
+}
+
+void MoveBolas() {
+  int i;
+  for(i = 0; i <= MaxBolas; i++) {
+    if (Bolas[i].move) {
+      Bolas[i].d = Bolas[i].d + Bolas[i].passo;
+      Bolas[i].x = Bolas[i].x0 + Bolas[i].d * cos(Bolas[i].ang*PI/180);
+      Bolas[i].y = Bolas[i].y0 - Bolas[i].d * sin(Bolas[i].ang*PI/180);
+      if (Bolas[i].x <= 10 + Bolas[i].r || Bolas[i].x >= 1360 - Bolas[i].r) 
+        Bolas[i].passo = -Bolas[i].passo;
+      if (Bolas[i].y <= 50 + Bolas[i].r || Bolas[i].y >= 680 - Bolas[i].r) 
+        Bolas[i].passo = -Bolas[i].passo;
+    }
+  }
+}
+
+void DesenhaBolas() {
+  int i;
+  setfillstyle(1, RGB(0, 0, 127));
+  setcolor(RGB(255, 255, 255));
+  for(i = 0; i < MaxBolas; i++) {
+    fillellipse(Bolas[i].x, Bolas[i].y, Bolas[i].r, Bolas[i].r);
+  }
+}
