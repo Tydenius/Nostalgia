@@ -18,7 +18,13 @@ int MaxVidas = 4;
 double score = 0;
 
 char array[10];
+char array2[10];
 
+struct TVidas{
+	int x0,y0;
+	int r;
+	int x,y;	
+};
 
 struct TBolas {
   int x0, y0;
@@ -59,7 +65,7 @@ int main()  {
   srand(time(NULL));
   initwindow(MaxX, MaxY);	
   IniciaDados();
-  settextstyle(4, 0, 5);
+  settextstyle(4, 0, 4);
   
   while(tecla != ESC) {
     if (pg == 1) pg = 2; else pg=1;
@@ -67,6 +73,7 @@ int main()  {
     cleardevice();
 	DesenhaFundo();
     Score();
+    DesenhaHeitor();
     MoveBolas();
     DesenhaHeitor();
     DesenhaBolas();
@@ -123,6 +130,34 @@ int main()  {
     
     if(h1 <= Heitor[0].r + Bolas[0].r){
     	Bolas[0].passo = -Bolas[0].passo;
+    	MaxVidas--;
+	}else if(h2 <= Heitor[0].r + Bolas[1].r){
+		Bolas[1].passo = -Bolas[1].passo;
+		MaxVidas--;
+	}else if(h3 <= Heitor[0].r + Bolas[2].r){
+		Bolas[2].passo = -Bolas[2].passo;
+		MaxVidas--;
+	}else if(h4 <= Heitor[0].r + Bolas[3].r){
+		Bolas[3].passo = -Bolas[3].passo;
+		MaxVidas--;
+	}else if(h5 <= Heitor[0].r + Bolas[4].r){
+		Bolas[4].passo = -Bolas[4].passo;
+		MaxVidas--;
+	}else if(h6 <= Heitor[0].r + Bolas[5].r){
+		Bolas[5].passo = -Bolas[5].passo;
+		MaxVidas--;
+	}else if(h7 <= Heitor[0].r + Bolas[6].r){
+		Bolas[6].passo = -Bolas[6].passo;
+		MaxVidas--;
+	}else if(h8 <= Heitor[0].r + Bolas[7].r){
+		Bolas[7].passo = -Bolas[7].passo;
+		MaxVidas--;
+	}else if(h9 <= Heitor[0].r + Bolas[8].r){
+		Bolas[8].passo = -Bolas[8].passo;
+		MaxVidas--;
+	}else if(h10 <= Heitor[0].r + Bolas[9].r){
+		Bolas[9].passo = -Bolas[9].passo;
+		MaxVidas--;
 	}
     
     if (d1 <= Bolas[0].r + Bolas[2].r){
@@ -193,35 +228,53 @@ int main()  {
       Bolas[7].passo = -Bolas[7].passo;
 	}
 	
+	if(MaxVidas <= 0){
+		Bolas[0].move = 0;
+		Bolas[1].move = 0;
+		Bolas[2].move = 0;
+		Bolas[3].move = 0;
+		Bolas[4].move = 0;
+		Bolas[5].move = 0;
+		Bolas[6].move = 0;
+		Bolas[7].move = 0;
+		Bolas[8].move = 0;
+		Bolas[9].move = 0;
+		outtextxy(555,800,"Fim de Jogo");
+	}
+	
 	
 	
     delay(20);
     if (kbhit()) {
       tecla = getch();
-      if (tecla == ' ') {
-        Bolas[0].move = !Bolas[0].move;
-        Bolas[1].move = !Bolas[1].move;
-        Bolas[2].move = !Bolas[2].move;
-        Bolas[3].move = !Bolas[3].move;
-        Bolas[4].move = !Bolas[4].move;
-        Bolas[5].move = !Bolas[5].move;
-        Bolas[6].move = !Bolas[6].move;
-        Bolas[7].move = !Bolas[7].move;
-        Bolas[8].move = !Bolas[8].move;
-        Bolas[9].move = !Bolas[9].move;
-      }
-      if(tecla == KEY_UP){
-      	Heitor[0].y = Heitor[0].y - Heitor[0].passo;
-	  }
-	  if(tecla == KEY_DOWN){
-      	Heitor[0].y = Heitor[0].y + Heitor[0].passo;
-	  }
-	  if(tecla == KEY_LEFT){
-	  	Heitor[0].x = Heitor[0].x - Heitor[0].passo;
-	  }
-	  if(tecla == KEY_RIGHT){
-	  	Heitor[0].x = Heitor[0].x + Heitor[0].passo;
-	  }
+      if(MaxVidas > 0){
+      	if (tecla == ' ') {
+        	Bolas[0].move = !Bolas[0].move;
+        	Bolas[1].move = !Bolas[1].move;
+        	Bolas[2].move = !Bolas[2].move;
+        	Bolas[3].move = !Bolas[3].move;
+        	Bolas[4].move = !Bolas[4].move;
+        	Bolas[5].move = !Bolas[5].move;
+        	Bolas[6].move = !Bolas[6].move;
+        	Bolas[7].move = !Bolas[7].move;
+        	Bolas[8].move = !Bolas[8].move;
+        	Bolas[9].move = !Bolas[9].move;
+      	}
+  	}
+      if(Bolas[0].move != 0){
+      	if(tecla == KEY_UP){
+      		Heitor[0].y = Heitor[0].y - Heitor[0].passo;
+	  	}
+	  	if(tecla == KEY_DOWN){
+      		Heitor[0].y = Heitor[0].y + Heitor[0].passo;
+	  	}
+	  	if(tecla == KEY_LEFT){
+	  		Heitor[0].x = Heitor[0].x - Heitor[0].passo;
+	  	}
+	  	if(tecla == KEY_RIGHT){
+	  		Heitor[0].x = Heitor[0].x + Heitor[0].passo;
+	  	}
+	 }
     }
   }
   
@@ -363,12 +416,16 @@ void IniciaDados() {
 }
 
 void Score(){
-	if(MaxVidas > 0){
+	if(MaxVidas > 0 && Bolas[0].move != 0){
 		score = score + 0.1;
-		sprintf(array, "%f", score);
-		outtextxy(50,850, "Score:");
-		outtextxy(230,850, array);
 	}
+	sprintf(array, "%f", score);
+	outtextxy(50,850, "Score:");
+	outtextxy(230,850, array);
+	
+	sprintf(array2, "%d", MaxVidas);
+    outtextxy(700,850, "Vidas: ");
+    outtextxy(850, 850, array2);			
 }
 
 void MoveBolas() {
