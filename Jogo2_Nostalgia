@@ -128,11 +128,12 @@ int main()  {
     d23 = sqrt(pow(Bolas[5].x - Bolas[6].x, 2) + pow(Bolas[5].y - Bolas[6].y, 2));
     d24 = sqrt(pow(Bolas[5].x - Bolas[7].x, 2) + pow(Bolas[5].y - Bolas[7].y, 2));
     
+    //verifica colisão com o Heitor
     if(h1 <= Heitor[0].r + Bolas[0].r){
     	Bolas[0].passo = -Bolas[0].passo;
     	MaxVidas--;
 	}else if(h2 <= Heitor[0].r + Bolas[1].r){
-		Bolas[1].passo = -Bolas[1].passo;
+		Bolas[1].passo = -Bolas[1].passo ;
 		MaxVidas--;
 	}else if(h3 <= Heitor[0].r + Bolas[2].r){
 		Bolas[2].passo = -Bolas[2].passo;
@@ -392,8 +393,8 @@ void IniciaDados() {
   Bolas[7].move  = 0;
   
   //Bola horizontal Inferior
-  Bolas[8].x0    = 80;
-  Bolas[8].y0    = 600;
+  Bolas[8].x0    = 90;
+  Bolas[8].y0    = 620;
   Bolas[8].x     = Bolas[8].x0;
   Bolas[8].y     = Bolas[8].y0;
   Bolas[8].r     = 50;
