@@ -263,17 +263,34 @@ int main()  {
       	}
   	}
       if(Bolas[0].move != 0){
+      	if(Heitor)
       	if(tecla == KEY_UP){
-      		Heitor[0].y = Heitor[0].y - Heitor[0].passo;
+      		if (Heitor[0].y <= 10 + Heitor[0].r || Heitor[0].y >= 720 - Heitor[0].r){
+      			
+      		 }else{
+      		 	Heitor[0].y = Heitor[0].y - Heitor[0].passo;
+			 }
 	  	}
 	  	if(tecla == KEY_DOWN){
-      		Heitor[0].y = Heitor[0].y + Heitor[0].passo;
-	  	}
+	  		if (Heitor[0].y <= 90 + Heitor[0].r || Heitor[0].y >= 680 - Heitor[0].r){
+      			
+      		 }else{
+      		 	Heitor[0].y = Heitor[0].y + Heitor[0].passo;
+			 }
+	  	 }
 	  	if(tecla == KEY_LEFT){
-	  		Heitor[0].x = Heitor[0].x - Heitor[0].passo;
+	  		if (Heitor[0].x <= 10 + Heitor[0].r || Heitor[0].x >= 1400 - Heitor[0].r){
+	  			
+	  		}else{
+	  			Heitor[0].x = Heitor[0].x - Heitor[0].passo;
+	  		  }
 	  	}
 	  	if(tecla == KEY_RIGHT){
-	  		Heitor[0].x = Heitor[0].x + Heitor[0].passo;
+	  		if (Heitor[0].x <= -30 + Heitor[0].r || Heitor[0].x >= 1350 - Heitor[0].r){
+	  			
+	  		}else{
+	  			Heitor[0].x = Heitor[0].x + Heitor[0].passo;
+	  		  }
 	  	}
 	 }
     }
